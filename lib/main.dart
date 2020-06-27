@@ -146,7 +146,20 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-        body: currentContent);
+
+    body:
+//        width: 1000,
+//        height: 1920,
+        Container(
+          decoration: BoxDecoration(
+          image: DecorationImage(
+          image: AssetImage("assets/paper_bg.jpg"),
+          fit: BoxFit.cover,
+          ),
+        ),
+          child: currentContent
+        )
+    );
   }
 }
 
