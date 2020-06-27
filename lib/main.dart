@@ -119,7 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
     body:
 //        width: 1000,
 //        height: 1920,
-        Center(
+        Container(
+          decoration: BoxDecoration(
+          image: DecorationImage(
+          image: AssetImage("assets/paper_bg.jpg"),
+          fit: BoxFit.cover,
+          ),
+        ),
           child: currentContent
         )
     );
