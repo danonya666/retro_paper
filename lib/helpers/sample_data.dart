@@ -1,4 +1,4 @@
-import 'article.dart';
+import '../components/article.dart';
 
 class SampleData {
   static String get sample1 {

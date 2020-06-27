@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:retropaper/article_collection.dart';
-import 'package:retropaper/article_page.dart';
-import 'package:retropaper/sample_data.dart';
-import 'package:retropaper/zoom_test.dart';
-import 'package:zoom_widget/zoom_widget.dart';
+import 'package:retropaper/components/article_collection.dart';
+import 'package:retropaper/models/article.dart';
+import 'package:retropaper/views/article_page.dart';
+import 'package:retropaper/helpers/sample_data.dart';
 
-import 'article.dart';
+import 'components/article.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,104 +62,38 @@ class _MyHomePageState extends State<MyHomePage> {
   var currentContent;
 
   _MyHomePageState() {
-    articles = [
-      Hero(
-        tag: "article1",
-        child: Article(
-          header: "I love hotdogs",
-          footer: "I hate Dogs",
-          description: "an article for cool kids who love hotdogs",
-          body: SampleData.sample1,
-          onZoom: () {
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                  transitionDuration: Duration(milliseconds: 250),
-                  pageBuilder: (_, __, ___) => ArticleScreen(
-                    header: "I love dogs",
-                    description: "an article for cool kids who love hotdogs",
-                    footer: "I hate Dogs",
-                    body: SampleData.sample1,
-                    heroTag: "article1",
-                  )),
-            );
-          }
-        ),
-      ),
-      Hero(
-        tag: "article2",
-        child: Article(
-            header: "I love hotdogs",
-            footer: "I hate Dogs",
-            description: "an article for cool kids who love hotdogs",
-            body: SampleData.sample1,
-            onZoom: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 250),
-                    pageBuilder: (_, __, ___) => ArticleScreen(
-                      header: "I love hotdogs",
-                      description: "an article for cool kids who love hotdogs",
-                      footer: "I hate Dogs",
-                      body: SampleData.sample1,
-                      heroTag: "article2",
-                    )),
-              );
-            }
-        ),
-      ),
-      Hero(
-        tag: "article3",
-        child: Article(
-            header: "I love hotdogs",
-            footer: "I hate Dogs",
-            description: "an article for cool kids who love hotdogs",
-            body: SampleData.sample1,
-            onZoom: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 250),
-                    pageBuilder: (_, __, ___) => ArticleScreen(
-                      header: "I love hotdogs",
-                      description: "an article for cool kids who love hotdogs",
-                      footer: "I hate Dogs",
-                      body: SampleData.sample1,
-                      heroTag: "article3",
-                    )),
-              );
-            }
-        ),
-      ),
-
-    ];
-
-    currentContent = ArticleCollection(articles: articles);
+    articles = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) => ArticleModel(
+        title: "title$index",
+        introduction: "introduction$index",
+        afterword: "afterword$index",
+        id: index.toString(),
+        text: SampleData.sample2)).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, fo
-    // r instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-
-    body:
-//        width: 1000,
-//        height: 1920,
-        Container(
-          decoration: BoxDecoration(
-          image: DecorationImage(
-          image: AssetImage("assets/paper_bg.jpg"),
-          fit: BoxFit.cover,
-          ),
-        ),
-          child: currentContent
-        )
-    );
+        body: ArticleCollection(
+          articles: articles.map((ArticleModel article) =>
+            Hero(
+              tag: "article${article.id}",
+              child: Article(
+                article: article,
+                onZoom: () {
+                  Navigator.of(context).push(
+                      PageRouteBuilder(
+                          pageBuilder: (_,__,___) {
+                            return ArticleScreen(
+                              article: article,
+                              heroTag: "article${article.id}",
+                            );
+                          }
+                      )
+                  );
+                },
+              ),
+            )
+          ).toList(),
+        ));
   }
 }
-
-
