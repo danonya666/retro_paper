@@ -24,7 +24,7 @@ class _ArticleCollectionState extends State {
       itemCount: articles.length,
       itemBuilder: (BuildContext context, int index) => articles[index],
       staggeredTileBuilder: (int index) =>
-      new StaggeredTile.fit(2),
+      new StaggeredTile.fit(1),
     );
     return GridView.count(
       crossAxisCount: 2,

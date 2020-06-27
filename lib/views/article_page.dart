@@ -13,9 +13,16 @@ class ArticleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Hero(
-        tag: heroTag,
-        child: Center(
+      appBar: AppBar(
+        backgroundColor: Colors.white12,
+        iconTheme: IconThemeData(
+          color: Colors.black54
+        ),
+        elevation: 0,
+      ),
+      body: Center(
+        child: Hero(
+          tag: heroTag,
           child: Article(
             article: article,
           ),
