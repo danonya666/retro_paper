@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -65,56 +64,88 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _MyHomePageState() {
     articles = [
-      Article(
-        header: "I love hotdogs",
-        footer: "I hate Dogs",
-        description: "an article for cool kids who love hotdogs",
-        body: SampleData.sample1,),
-
-      Article(
-        header: "I love hotdogs",
-        footer: "I hate Dogs",
-        description: "an article for cool kids who love hotdogs",
-        body: SampleData.sample1,
+      Hero(
+        tag: "article1",
+        child: Article(
+          header: "I love hotdogs",
+          footer: "I hate Dogs",
+          description: "an article for cool kids who love hotdogs",
+          body: SampleData.sample1,
+          onZoom: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                  transitionDuration: Duration(milliseconds: 250),
+                  pageBuilder: (_, __, ___) => ArticleScreen(
+                    header: "I love dogs",
+                    description: "an article for cool kids who love hotdogs",
+                    footer: "I hate Dogs",
+                    body: SampleData.sample1,
+                    heroTag: "article1",
+                  )),
+            );
+          }
+        ),
       ),
+      Hero(
+        tag: "article2",
+        child: Article(
+            header: "I love hotdogs",
+            footer: "I hate Dogs",
+            description: "an article for cool kids who love hotdogs",
+            body: SampleData.sample1,
+            onZoom: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 250),
+                    pageBuilder: (_, __, ___) => ArticleScreen(
+                      header: "I love hotdogs",
+                      description: "an article for cool kids who love hotdogs",
+                      footer: "I hate Dogs",
+                      body: SampleData.sample1,
+                      heroTag: "article2",
+                    )),
+              );
+            }
+        ),
+      ),
+      Hero(
+        tag: "article3",
+        child: Article(
+            header: "I love hotdogs",
+            footer: "I hate Dogs",
+            description: "an article for cool kids who love hotdogs",
+            body: SampleData.sample1,
+            onZoom: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 250),
+                    pageBuilder: (_, __, ___) => ArticleScreen(
+                      header: "I love hotdogs",
+                      description: "an article for cool kids who love hotdogs",
+                      footer: "I hate Dogs",
+                      body: SampleData.sample1,
+                      heroTag: "article3",
+                    )),
+              );
+            }
+        ),
+      ),
+
     ];
 
-    heroedArticles = articles.map((e) => Hero(
-        child: FlatButton(
-          child: e,
-          onPressed: () {
-            print("Aaaa");
-            setState(() {
-              currentContent =
-                  Hero(
-                    child: e.zoomed(),
-                    tag: e.body
-                  );
-            });
-          },
-        ),
-        tag: e.body
-    ));
-
-    currentContent = ArticleCollection(
-        articles: heroedArticles
-    );
+    currentContent = ArticleCollection(articles: articles);
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
+    // This method is rerun every time setState is called, fo
+    // r instance as done
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
 
     body:
 //        width: 1000,
@@ -131,3 +162,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+

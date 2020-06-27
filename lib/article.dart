@@ -10,19 +10,25 @@ class Article extends StatefulWidget {
 
   var body;
 
-  bool isZoomed;
-  Article({this.header, this.description, this.body, this.footer, this.isZoomed=false});
+  VoidCallback onZoom;
+
+  Article(
+      {this.header,
+      this.description,
+      this.body,
+      this.footer,
+      this.onZoom});
 
   @override
   State<StatefulWidget> createState() {
-    return _ArticleState(header: this.header, description: this.description, body: this.body, footer: this.footer, isZoomed: this.isZoomed);
+    return _ArticleState(
+        header: this.header,
+        description: this.description,
+        body: this.body,
+        footer: this.footer,
+        onZoom: onZoom
+    );
   }
-
-  Article zoomed() {
-    this.isZoomed = true;
-    return this;
-  }
-
 }
 
 class _ArticleState extends State {
@@ -30,45 +36,68 @@ class _ArticleState extends State {
   final String description;
   final String body;
   final String footer;
-  final double unzoomed = 0.5;
-  final double zoomed = 2;
-  final bool isZoomed;
+  final VoidCallback onZoom;
 
-
-  _ArticleState({this.header, this.description, this.body, this.footer, this.isZoomed=false});
+  _ArticleState(
+      {this.header, this.description, this.body, this.footer, this.onZoom});
 
   @override
   Widget build(BuildContext context) {
-    print('zoomed $isZoomed');
     return FlatButton(
-//      onPressed: () {
-//        setState(() {
-//          isZoomed = !isZoomed;
-//        });
-//      },
+      onPressed: () {
+        if(onZoom != null)
+          onZoom();
+      },
       child: Container(
-          child: Column(
-            children: [
-              Text(
-                header,
-                style: Style.header(zoom: unzoomed),
-              ),
-              Text(
-                description,
-                style: Style.description(zoom: isZoomed? zoomed: unzoomed),
-              ),
-              Text(
-                body,
-                style: Style.body(zoom: isZoomed? zoomed: unzoomed),
-              ),
-              Text(
-                footer,
-                style: Style.footer(zoom: isZoomed? zoomed: unzoomed),
-              ),
-            ],
-          ),
+        height: MediaQuery.of(context).size.height * 0.75,
+        width: MediaQuery.of(context).size.width * 0.65,
+        child: Column(
+          children: [
+            Text(
+              header,
+            ),
+            Text(
+              description,
+            ),
+            Text(
+              body,
+            ),
+            Text(
+              footer,
+            ),
+          ],
+        ),
       ),
     );
   }
-
 }
+
+
+class ArticleScreen extends StatelessWidget {
+
+  final String header;
+  final String description;
+  final String body;
+  final String footer;
+  final String heroTag;
+
+  ArticleScreen({this.header, this.description, this.body, this.footer, this.heroTag});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Hero(
+        tag: heroTag,
+        child: Center(
+          child: Article(
+              header: header,
+              description: description,
+              body: body,
+              footer: footer,
+            ),
+        ),
+      ),
+    );
+  }
+}
+

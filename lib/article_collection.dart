@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class ArticleCollection extends StatefulWidget{
   final articles;
@@ -17,8 +18,11 @@ class _ArticleCollectionState extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return GridView.count(
+      crossAxisCount: 2,
+      scrollDirection: Axis.horizontal,
+      childAspectRatio: 1,
+      shrinkWrap: false,
       children: [
         ...articles
       ],
