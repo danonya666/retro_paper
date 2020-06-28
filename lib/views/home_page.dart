@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:retropaper/components/article.dart';
 import 'package:retropaper/components/article_collection.dart';
+import 'package:retropaper/components/daily_news_layout.dart';
+import 'package:retropaper/components/small_article.dart';
 import 'package:retropaper/helpers/sample_data.dart';
 import 'package:retropaper/models/article.dart';
 
@@ -34,16 +36,44 @@ class _MyHomePageState extends State<MyHomePage> {
         afterword: "afterword$index",
         id: index.toString(),
         text: SampleData.sample2)).toList();
+    articles.add(ArticleModel(
+      title: "",
+      introduction: "",
+      afterword: "",
+      id: "11",
+      text: "a small text that can fit in 51x48 box"
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ArticleCollection(
-          articles: articles.map((ArticleModel article) =>
+//        body: ArticleCollection(
+//          articles: articles.map((ArticleModel article) =>
+//              Hero(
+//                tag: "article${article.id}",
+//                child: Article(
+//                  article: article,
+//                  onZoom: () {
+//                    Navigator.of(context).push(
+//                        PageRouteBuilder(
+//                            pageBuilder: (_,__,___) {
+//                              return ArticleScreen(
+//                                article: article,
+//                                heroTag: "article${article.id}",
+//                              );
+//                            }
+//                        )
+//                    );
+//                  },
+//                ),
+//              )
+//          ).toList(),
+    body: DailyNewsLayout(
+      articles: articles.map((ArticleModel article) =>
               Hero(
                 tag: "article${article.id}",
-                child: Article(
+                child: SmallArticle(
                   article: article,
                   onZoom: () {
                     Navigator.of(context).push(
@@ -58,8 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                 ),
-              )
-          ).toList(),
-        ));
+    ),
+        ).toList()));
+//    );
+
   }
 }
